@@ -23,12 +23,12 @@
   #include <direct.h>
   #include <shlobj.h>
   #undef interface
-  #define bsnesexport __declspec(dllexport)
+  #define dllexport __declspec(dllexport)
 #else
   #include <unistd.h>
   #include <pwd.h>
   #include <sys/stat.h>
-  #define bsnesexport
+  #define dllexport
 #endif
 
 //==================
