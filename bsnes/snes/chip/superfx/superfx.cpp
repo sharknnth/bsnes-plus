@@ -11,7 +11,12 @@ namespace SNES {
 #include "timing/timing.cpp"
 #include "disasm/disasm.cpp"
 
-SuperFX superfx;
+#if defined(DEBUGGER)
+  #include "debugger/debugger.cpp"
+  SFXDebugger superfx;
+#else
+  SuperFX superfx;
+#endif
 
 void SuperFX::Enter() { superfx.enter(); }
 
@@ -26,17 +31,16 @@ void SuperFX::enter() {
       continue;
     }
 
-    uint8 changedreg = op_exec(peekpipe());
-    if(changedreg == 15) {
-      cache_finish();
-    } else {
-      regs.r[15]++;
-      if(changedreg == 14) rombuffer_update();
-    }
+    op_step();
+
+    op_exec(peekpipe());
+    if(r15_modified == false) regs.r[15]++;
   }
 }
 
 void SuperFX::init() {
+  regs.r[14].on_modify = { &SuperFX::r14_modify, this };
+  regs.r[15].on_modify = { &SuperFX::r15_modify, this };
 }
 
 void SuperFX::enable() {
@@ -68,6 +72,9 @@ void SuperFX::reset() {
   regs.pipeline = 0x01;  //nop
   regs.ramaddr = 0x0000;
   regs.reset();
+
+  disassemble_regs = 0;
+  disassemble_lastregs = 0;
 
   memory_reset();
   timing_reset();

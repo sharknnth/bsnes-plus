@@ -15,7 +15,15 @@ public:
   void power();
   void reset();
   void serialize(serializer&);
+
+  // used by the superfx debugger prior to executing instructions
+  debugvirtual void op_step() {};
 };
 
-extern SuperFX superfx;
+#if defined(DEBUGGER)
+  #include "debugger/debugger.hpp"
+  extern SFXDebugger superfx;
+#else
+  extern SuperFX superfx;
+#endif
 extern SuperFXBus superfxbus;
