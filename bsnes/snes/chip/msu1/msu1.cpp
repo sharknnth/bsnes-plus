@@ -10,11 +10,6 @@ MSU1 msu1;
 void MSU1::Enter() { msu1.enter(); }
 
 void MSU1::enter() {
-  if(boot == true) {
-    boot = false;
-    for(unsigned addr = 0x2000; addr <= 0x2007; addr++) mmio_write(addr, 0x00);
-  }
-
   while(true) {
     if(scheduler.sync == Scheduler::SynchronizeMode::All) {
       scheduler.exit(Scheduler::ExitReason::SynchronizeEvent);
@@ -70,13 +65,12 @@ void MSU1::power() {
 
 void MSU1::reset() {
   create(MSU1::Enter, 44100);
-  boot = true;
 
   mmio.data_offset       = 0;
   mmio.data_seek_offset  = 0;
   mmio.audio_offset = 0;
   mmio.audio_track  = 0;
-  mmio.audio_volume = 255;
+  mmio.audio_volume = 0;
   mmio.audio_resume_track = ~0;
   mmio.audio_resume_offset = 0;
   mmio.data_busy    = true;
