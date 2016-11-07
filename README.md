@@ -32,7 +32,7 @@ Non-debugging features:
 
 ## Building on Windows (64-bit)
 
-- Get mingw-w64 with 64-bit Qt 4.8.6 and do a full installation of the exe (https://sourceforge.net/projects/qt64ng/files/qt/x86-64/4.8.6/mingw-4.9/seh/)
+- Get mingw-w64 with 64-bit Qt 4.8.6 and do a full installation of the .exe (https://sourceforge.net/projects/qt64ng/files/qt/x86-64/4.8.6/mingw-4.9/seh/)
 - Set following environment variables (right click on My Computer, then Properties, Advanced, Environment variables): 
 QTDIR to C:\Qt\4.X.X (or whatever path you installed QT)
 QMAKESPEC to win32-g++
