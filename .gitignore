@@ -1,0 +1,12 @@
+*.a
+*.dll
+*.dylib
+*.exe
+*.moc
+*.o
+*.rcc
+*.so
+*.so.1
+/bsnes+.app
+*.patch
+*.rar
