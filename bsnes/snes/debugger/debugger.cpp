@@ -46,7 +46,8 @@ uint8 Debugger::read(Debugger::MemorySource source, unsigned addr) {
     } break;
 
     case MemorySource::APUBus: {
-      return smp.op_debugread(addr & 0xffff);
+      if((addr & 0xffc0) == 0xffc0) return smp.iplrom[addr & 0x3f];
+      return memory::apuram.read(addr & 0xffff);
     } break;
 
     case MemorySource::APURAM: {
@@ -95,8 +96,7 @@ void Debugger::write(Debugger::MemorySource source, unsigned addr, uint8 data) {
     case MemorySource::CPUBus: {
       bus.write(addr & 0xffffff, data);
     } break;
-    
-    case MemorySource::APUBus:
+
     case MemorySource::APURAM: {
       memory::apuram.write(addr & 0xffff, data);
     } break;
