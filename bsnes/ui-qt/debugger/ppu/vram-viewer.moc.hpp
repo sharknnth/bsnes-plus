@@ -30,12 +30,9 @@ private:
   void refresh4bpp(const uint8_t*);
   void refresh8bpp(const uint8_t*);
   void refreshMode7(const uint8_t*);
-  void refreshScaledImage();
 
 private:
-  QImage image;
-  QImage scaledImage;
-
+  QImage *image;
   unsigned bpp;
   unsigned zoom;
   unsigned selectedColor;
